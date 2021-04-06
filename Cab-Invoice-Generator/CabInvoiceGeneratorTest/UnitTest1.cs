@@ -9,6 +9,7 @@ namespace CabInvoiceGeneratorTest
         [SetUp]
         public void Setup()
         {
+
         }
 
         [Test]
@@ -42,7 +43,19 @@ namespace CabInvoiceGeneratorTest
             Assert.AreEqual(true, summary.Equals(expectedSummary));
         }
 
-
+        [Test]
+        public void GivenAUserIdShouldReturnInvoice()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(2.1, 5), new Ride(1, 10) };
+            Ride[] rides1 = { new Ride(2.0, 5), new Ride(0.1, 5), new Ride(1.1, 6) };
+            Ride[] rides2 = { new Ride(3.2, 3), new Ride(0.2, 2) };
+            invoiceGenerator.rideRepository.AddRide("1", rides);
+            invoiceGenerator.rideRepository.AddRide("2", rides1);
+            invoiceGenerator.rideRepository.AddRide("3", rides2);
+            InvoiceSummary expectedSummary = new InvoiceSummary(3, 48);
+            Assert.AreEqual(expectedSummary, invoiceGenerator.GetInvoiceSummary("2"));
+        }
 
     }
 
