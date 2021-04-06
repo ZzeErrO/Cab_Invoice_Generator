@@ -57,6 +57,25 @@ namespace CabInvoiceGeneratorTest
             Assert.AreEqual(expectedSummary, invoiceGenerator.GetInvoiceSummary("2"));
         }
 
+        [Test]
+        public void GivenDistanceAndTimeShouldReturnTotalByPremuimFare()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.PREMIUM);
+            double distance = 2.0;
+            int time = 5;
+            double fare = invoiceGenerator.CalculateFare(distance, time);
+            double expected = 40;
+
+            InvoiceGenerator invoiceGenerator1 = new InvoiceGenerator(RideType.NORMAL);
+            double distance1 = 2.0;
+            int time1 = 5;
+            double fare1 = invoiceGenerator1.CalculateFare(distance1, time1);
+            double expected1 = 25;
+
+            Assert.AreEqual(expected, fare);
+            Assert.AreEqual(expected1, fare1);
+        }
+
     }
 
 }
