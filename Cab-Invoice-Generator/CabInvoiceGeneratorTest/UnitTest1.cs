@@ -28,9 +28,21 @@ namespace CabInvoiceGeneratorTest
             invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
             Ride[] rides = { new Ride(2.0, 5), new Ride(0.1, 5) };
             InvoiceSummary summary = invoiceGenerator.CalculateFare(rides);
-            InvoiceSummary expectedSummary = new InvoiceSummary(2, 35.0);
-            Assert.AreEqual(expectedSummary.GetType(), summary.GetType());
+            InvoiceSummary expectedSummary = new InvoiceSummary(2, 31.0);
+            Assert.AreEqual(expectedSummary.totalFare, summary.totalFare);
         }
+
+        [Test]
+        public void GivenMultipleRidesAndFareShouldReturnEnhancedInvoice()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(2.1, 5), new Ride(1, 10) };
+            InvoiceSummary summary = invoiceGenerator.CalculateFare(rides);
+            InvoiceSummary expectedSummary = new InvoiceSummary(2, 46);
+            Assert.AreEqual(true, summary.Equals(expectedSummary));
+        }
+
+
 
     }
 
